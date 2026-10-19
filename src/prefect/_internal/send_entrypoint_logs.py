@@ -53,7 +53,11 @@ def main() -> None:
     try:
         _send(content, flow_run_id)
     except Exception:
-        pass
+        logger = logging.getLogger(__name__)
+        logger.exception(
+            "src/prefect/_internal/send_entrypoint_logs.py: failed to send entrypoint logs",
+            extra={"flow_run_id": str(flow_run_id) if flow_run_id else None},
+        )
 
 
 if __name__ == "__main__":
